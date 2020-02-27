@@ -1,38 +1,47 @@
 import 'package:flutter/material.dart';
+import './question.dart';
+import './answer.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
-    return MyAppState();
+    return _MyAppState();
   }
-
 }
 
-  class MyAppState extends State<MyApp>{
+class _MyAppState extends State<MyApp> {
 
-    var qIndex = 0;
-    List<String> questions = [
-      "what's your favorite color?",
-      "what's your favourite animal?",
-      "what's your favourite place?"
-    ];
-
-    void answerQuestion() {
-      setState(() {
-        qIndex++;
-        if(qIndex==questions.length){
-          qIndex = 0;
-        }
-      });
-      print('qIndex $qIndex');
+  var _qIndex = 0;
+ var questions = [
+    {
+      'questionText': "what's your favorite color?",
+      'answers': ['Black', 'Red', 'Green', 'White']
+    },
+    {
+      'questionText': "what's your favourite animal?",
+      'answers': ['cat','dog','rabbit','lion']
+    },
+    {
+      'questionText': "what's your favourite place?",
+      'answers': ['Kathmandu','Pokhara',' Gorkha','Biratnagar']
     }
+  ];
+
+  void _answerQuestion() {
+
+    setState(() {
+      _qIndex++;
+      if (_qIndex == questions.length) {
+        _qIndex = 0;
+      }
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -40,25 +49,12 @@ class MyApp extends StatefulWidget {
         ),
         body: Column(
           children: <Widget>[
-            Text(questions[qIndex]),
-            RaisedButton(
-              child: Text(
-                'Answer 1',
-              ),
-              onPressed: answerQuestion,
-            ),
-            RaisedButton(
-              child: Text(
-                'Answer 2',
-              ),
-              onPressed: answerQuestion,
-            ),
-            RaisedButton(
-              onPressed: answerQuestion,
-              child: Text(
-                'Answer 2',
-              ),
-            ),
+            Question(questions[_qIndex]['questionText']),
+            // ... => Spread operator, here extracts the widgets from the lists
+            // and gets added as a individual value for the uter lists. <Widget>[] list.
+            ...(questions[_qIndex]['answers'] as List<String>).map((answer) {
+              return  Answer(answer,_answerQuestion); // returns answer widgets
+            }).toList(),// list of answer widgets
           ],
         ),
       ),
