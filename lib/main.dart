@@ -9,7 +9,6 @@ class MyApp extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _MyAppState();
   }
-
 }
 
 class _MyAppState extends State<MyApp> {
@@ -46,12 +45,10 @@ class _MyAppState extends State<MyApp> {
   ];
 
   void _answerQuestion(int score) {
-
     _totalScore = _totalScore + score;
     setState(() {
       _qIndex++;
     });
-
   }
 
   @override
