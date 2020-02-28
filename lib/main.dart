@@ -51,6 +51,13 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  void _resetQuiz(){
+    setState(() {
+      _qIndex = 0;
+      _totalScore = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -59,7 +66,7 @@ class _MyAppState extends State<MyApp> {
           title: Text('My First App'),
         ),
         body: (_qIndex == _questions.length)
-            ? Result(_totalScore)
+            ? Result(_totalScore,_resetQuiz)
             : Quiz(_answerQuestion, _questions[_qIndex]['questionText'],
                 _questions[_qIndex]['answers']),
       ),
